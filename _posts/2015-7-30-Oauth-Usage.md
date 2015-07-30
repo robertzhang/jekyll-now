@@ -1,4 +1,9 @@
-# Oauth的使用手册
+---
+layout: post
+title: Android Service笔记
+---
+
+Oauth的使用手册
 
 ```
 最近需要使用Oauth2.0认证登陆，所以简单的学习了一下相关知识。
