@@ -10,7 +10,7 @@ tags:
 ---
 
 > __背景__：需要将 linphone 语音相关功能移植到已有项目中，为了尽可能少移植无用代码，故考虑只移植 linphone sdk 和其必要的调用逻辑代码。  
-> __思路__：已有项目为 swift 开，首选将 linphone 移植内容封装成静态库，供 swift 调用。
+> __思路__：已有项目为 swift 开发，首选将 linphone 移植内容封装成静态库，供 swift 调用。
 
 正式开始前要先吐槽一下 linphone 太过复杂，不经意间就会被绕进去，然后就再也出不来了。还好我只是浅尝辄止，并未过深研究。也许深入后会有新的一片天地，那就看以后有没有相关需要吧！
 
@@ -104,11 +104,11 @@ linphone 静态库工程结构如下图：
     const char* lPlay = [[libs pathForResource:@"hold" ofType:@"wav"] cStringUsingEncoding:[NSString defaultCStringEncoding]];
 	linphone_core_set_play_file(theLinphoneCore, lPlay);
 ~~~
-静态库的创建需要十分小心配置文件的设置，很容易因为被坑到。我就是因为没有在 Compile Sources 中将新添加的文件引入，导致报了很多莫名的错误。当然这和我自己粗心有很大关系。
+静态库的创建需要十分小心配置文件的设置，很容易因此被坑到。我就是因为没有在 Compile Sources 中将新添加的文件引入，导致报了很多莫名的错误。当然这和我自己粗心有很大关系。
 
 ### Swift 使用静态库
 
-静态库引入已有工程中如果出现 ，xcode 提示 linphoneSDK.a 文件不存在等这类问题，那是因为对于新 Clone 的代码，linphoneSDK.a 的引用失效所致。如果 linphoneSDK 工程和已有工程在同一个 workspace，只需要先编译一下 linphoneSDK 工程，然后将生成的 linphoneSDK.a 文件以及必要的 include 文件重新引入即可。具体的步骤可参看：[JZPhone 的 README](https://github.com/chenzht/JZPhone)
+静态库引入已有工程时，如果出现 xcode 提示 linphoneSDK.a 文件不存在等这类问题，那是因为对于新 clone 的代码，linphoneSDK.a 的引用失效所致。如果 linphoneSDK 工程和已有工程在同一个 workspace，只需要先编译一下 linphoneSDK 工程，然后将生成的 linphoneSDK.a 文件以及必要的 include 文件重新引入即可。具体的步骤可参看：[JZPhone 的 README](https://github.com/chenzht/JZPhone)
 
 以上是我在 Swift 项目中对 linphoneSDK 的一层封装
 
@@ -275,7 +275,7 @@ static var voipDelegate: VoipDelegate?
 static var voipDelegate: VoipDelegate? = LinphoneHelper.sharedInstance
 ~~~
 
-我们只需要替换实现 voipDelegate 协议的的实例对象，就可以自如的切换不同的 VOIP 组件，是不是很神奇呢？剩下的就不用我多说了，在你需要的地方尽情使用 voipDelegate 来调用 VOIP 的功能吧。
+我们只需要替换实现 VoipDelegate 协议的实例对象，就可以自如的切换不同的 VOIP 组件，是不是很神奇呢？剩下的就不用我多说了，在你需要的地方尽情使用 CallHelper.voipDelegate 来调用 VOIP 的功能吧。
 
 ## 说明
 
