@@ -9,7 +9,7 @@ tags:
     - IOS
 ---
 
-> __背景__：需要将 linphone 语音相关功能移植到已有项目中，为了尽可能少移植无用代码，故考虑只移植 linphone sdk 和其必要的调用逻辑代码。
+> __背景__：需要将 linphone 语音相关功能移植到已有项目中，为了尽可能少移植无用代码，故考虑只移植 linphone sdk 和其必要的调用逻辑代码。  
 > __思路__：已有项目为 swift 开，首选将 linphone 移植内容封装成静态库，供 swift 调用。
 
 正式开始前要先吐槽一下 linphone 太过复杂，不经意间就会被绕进去，然后就再也出不来了。还好我只是浅尝辄止，并未过深研究。也许深入后会有新的一片天地，那就看以后有没有相关需要吧！
@@ -264,19 +264,26 @@ class LinphoneHelper: VoipDelegate {
 
 linphoneSDK 静态库是使用 OC 编写的，Swift 要调用就必须加入桥接，具体办法请自行查阅在此不一赘述。到这里就完成了封装工作。按照我个人的习惯，为了不破坏已有代码的逻辑，也为了让两个关系不大的模块尽可能的低耦合，做一层层的封装还是有必要的。
 细心的你一定在上面发现了 
-> static var voipDelegate: VoipDelegate? 
+
+~~~
+static var voipDelegate: VoipDelegate? 
+~~~
 
 这段代码她是做什么用的呢？没错，她就是我们解耦的关键。
-> static var voipDelegate: VoipDelegate? = LinphoneHelper.sharedInstance
+
+~~~
+static var voipDelegate: VoipDelegate? = LinphoneHelper.sharedInstance
+~~~
 
 我们只需要替换实现 voipDelegate 协议的的实例对象，就可以自如的切换不同的 VOIP 组件，是不是很神奇呢？剩下的就不用我多说了，在你需要的地方尽情使用 voipDelegate 来调用 VOIP 的功能吧。
 
 ## 说明
 
 以上开发环境如下：
->swift: 2.2
->xcode: 7.3
->linphone 版本: 老的版本
+
+>swift: 2.2  
+>xcode: 7.3  
+>linphone 版本: 老的版本  
 
 替换到最新版本 linphone sdk 需要相应的替换 linphoneManager 文件。
 
