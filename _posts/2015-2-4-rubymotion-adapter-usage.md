@@ -11,11 +11,11 @@ tags:
  
 rubymotion关于adapter的用法（该文为转载）
 
-### ArrayAdapter使用
+## ArrayAdapter使用
 main_activity.rb
 
 
-```
+~~~
 class MainActivity < Android::App::Activity
   Members = ['Kanako', 'Ayaka', 'Shiori', 'Momoka', 'Reni']
   def onCreate(savedInstanceState)
@@ -27,12 +27,12 @@ class MainActivity < Android::App::Activity
     self.contentView = layout
   end
 end
-```
+~~~
 
 hello_array_adapter.rb
 
 
-```
+~~~
 class HelloArrayAdapter < Android::Widget::ArrayAdapter
   def getView(position, convertView, parent)
     textView = Android::Widget::TextView.new(context)
@@ -42,13 +42,13 @@ class HelloArrayAdapter < Android::Widget::ArrayAdapter
     layout
   end
 end
-```
+~~~
 
-### BaseAdapter使用
+## BaseAdapter使用
 main_activity.rb
 
 
-```
+~~~
 class MainActivity < Android::App::Activity
   def onCreate(savedInstanceState)
     super
@@ -68,13 +68,13 @@ class MainActivity < Android::App::Activity
     p position
   end
 end
-```
+~~~
 
 
 hello\_list\_adapter.rb
 
 
-```
+~~~
 class HelloListAdapter < Android::Widget::BaseAdapter 
   Data = ["Kanako", "Aayaka", "Shiori", "Momoka", "Reni"]
   def getCount()
@@ -103,7 +103,7 @@ class HelloListAdapter < Android::Widget::BaseAdapter
     end
   end
 end
-```
+~~~
 
 原文链接地址：http://qiita.com/sassy_watson/items/53fb87d4814708c87760
 
