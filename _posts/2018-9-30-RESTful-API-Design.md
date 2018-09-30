@@ -12,6 +12,7 @@ tags:
 > 关键词：iOS  
 开发语言：Swift  
 使用到的库：Alamofire，SwiftyJSON，ObjectMapper
+
 # 背景
 最近重构 API 相关代码，参考了 RocketChat.iOS 项目，获益匪浅故分享记录一下。RocketChat 对 API 的编写思路很有意思，这里只是对相关设计做了简单的整理。如果对此感兴趣，可以直接查看其开源项目。（文末附有地址）
 # API 设计
@@ -186,7 +187,7 @@ class ThreadRequest: APIRequest {
   }
   
   /**  
-    API 中的 R.APIResourceType(raw: json) 实际调用的下面这个类型。
+    API 中的 R.APIResourceType(raw: json) 实际调用的下面这个类型。  
     所以我们在实现 APIRequest 的时候需要对 APIResourceType 参数做相应的修改
   */
   typealias APIResourceType = ThreadResource
@@ -241,10 +242,10 @@ class UpdateThreadInfoParameters: APIParameters {
     self.announcement = announcement
   }
   
-/** 
-Alamofire 需要的 Parameters 是字典类型，所以这里需要将 APIParameters 子类的所有属性转换成 Parameters 。  
-细心的你一定观察到，APIParameters 的基本扩展中已经实现了 toParameters() 方法。
-这里复写是为本实现做了定制
+/**  
+Alamofire 需要的 Parameters 是字典类型，所以这里需要将 APIParameters 子类的所有属性转换成 Parameters 。    
+细心的你一定观察到，APIParameters 的基本扩展中已经实现了 toParameters() 方法。  
+这里复写是为本实现做了定制  
 */
   func toParameters() -> Parameters? {
     if subject != nil, announcement != nil {
